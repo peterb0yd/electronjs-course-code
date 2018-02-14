@@ -1,0 +1,33 @@
+<head>
+  <style>
+    h1 {
+      color: #ff0000;
+    }
+    ul li {
+      margin: 10px auto;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>My Todos</h1>
+  <ul></ul>
+
+  <script type="text/javascript">
+    const electron = require('electron')
+    const { ipcRenderer } = electron
+    const list = document.querySelector('ul')
+
+    ipcRenderer.on('todo:add', (event, todo) => {
+      const li = document.createElement('li')
+      const text = document.createTextNode(todo)
+
+      li.appendChild(text)
+      list.appendChild(li)
+    })
+
+    ipcRenderer.on('todos:clear', (event) => {
+      list.innerHTML = ''
+    })
+  </script>
+</body>
